@@ -1,0 +1,40 @@
+<%- include header %>
+<a href="/detail/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a>
+<p><%- post.post %></p>
+<p class="info">
+    作者：<a href="/<%= post.name %>"><%= post.name %></a> |
+    日期：<%= post.time.minute %> |
+    阅读：<%= post.pv %> |
+    评论：<%= post.comments.length %>
+</p>
+<p class="info">
+    标签：
+    <% post.tags.forEach(function (tag, index) { %>
+    <% if (tag) { %>
+    <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+    <% } %>
+    <% }) %>
+</p>
+<p class="info">
+    评论：<% if (post.comments.length != 0) { %>
+
+    <% post.comments.forEach(function (comment, index) { %>
+    <% if (comment) { %>
+    <p><%= comment %></p>
+    <% } %>
+    <% }) %>
+    <% } else {%>
+        无
+    <% } %>
+</p>
+<p>
+    <% if(user && user.name == post.name) { %>
+    <span><a class="edit" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">编辑</a></span>
+    <span><a class="edit" href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">删除</a></span>
+    <% } %>
+</p>
+<form method="post">
+    <textarea name="comment" placeholder="评论区" style="width:450px;height: 150px"></textarea><br/>
+    <input type="submit" value="提交">
+</form>
+<%- include footer %>
